@@ -5,7 +5,7 @@ import { ResetBoard } from './Components/ResetBoard';
 
 function App() {
 
-  const [board, setBoard] = useState(Array(9 * 9).fill(null));
+  const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
 
@@ -35,12 +35,15 @@ function App() {
   }
   const resetBoard = () => {
     setGameOver(false);
-    setBoard(Array(9 * 9).fill(null));
+    setBoard(Array(9).fill(null));
     setTurn(true);
   }
   return (
     <div className="App">
-      <Board board={board} onClick={gameOver ? resetBoard : BoxClick} />
+      <div className='mainBoard'>
+        {[...Array(9)].map((index) => (
+          <Board board={board} key={index} onClick={gameOver ? resetBoard : BoxClick} />))}
+      </div>
       <ResetBoard resetBoard={resetBoard} />
     </div>
   );
