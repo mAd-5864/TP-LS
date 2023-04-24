@@ -4,45 +4,48 @@ import { Board } from './Components/Board';
 import { ResetBoard } from './Components/ResetBoard';
 
 function App() {
-
   const [board, setBoard] = useState(Array(9).fill(null));
+  const [boards, setBoards] = useState(Array(9).fill(board));
   const [turn, setTurn] = useState(true);
   const [gameOver, setGameOver] = useState(false);
 
-  /* const board = Array(9 * 9).fill(null).map(() => Array(9 * 9).fill(null)); */
-  /* [
-    [[[null, null, null],[null, null, null], [null, null, null],],
-    [[null, null, null], [null, null, null], [null, null, null],],
-    [[null, null, null], [null, null, null], [null, null, null],]],
-    [[[null, null, null],[null, null, null], [null, null, null],],
-    [[null, null, null], [null, null, null], [null, null, null],],
-    [[null, null, null], [null, null, null], [null, null, null],]],
-    [[[null, null, null],[null, null, null], [null, null, null],],
-    [[null, null, null], [null, null, null], [null, null, null],],
-    [[null, null, null], [null, null, null], [null, null, null],]],
-  ] */
-
-  const BoxClick = (boxInd) => {
-    const updatedBoard = board.map((token, ind) => {
-      if (ind === boxInd) {
-        return turn === true ? 'X' : 'O';
+  const boxClick = (boardInd, boxInd) => {
+    const updatedBoards = boards.map((board, ind) => {
+      if (ind === boardInd) {
+        return board.map((token, i) => {
+          if (i === boxInd && token == null) {
+            setTurn(!turn);
+            return turn ? 'X' : 'O';
+          } else {
+            return token;
+          }
+        });
       } else {
-        return token;
+        return board;
       }
-    })
-    setBoard(updatedBoard)
-    setTurn(!turn)
+    });
+    setBoards(updatedBoards);
+    console.log(updatedBoards);
   }
+
+
+
   const resetBoard = () => {
     setGameOver(false);
-    setBoard(Array(9).fill(null));
+    setBoards(Array(9).fill(null));
     setTurn(true);
   }
+
   return (
     <div className="App">
       <div className='mainBoard'>
-        {[...Array(9)].map((index) => (
-          <Board board={board} key={index} onClick={gameOver ? resetBoard : BoxClick} />))}
+        {boards.map((value, boardInd) => (
+          <Board
+            key={boardInd}
+            board={boards[boardInd]}
+            onClick={gameOver ? resetBoard : (boxInd) => boxClick(boardInd, boxInd)}
+          />
+        ))}
       </div>
       <ResetBoard resetBoard={resetBoard} />
     </div>
