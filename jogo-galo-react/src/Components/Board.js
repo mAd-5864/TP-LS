@@ -6,7 +6,7 @@ export const Board = ({ board, onClick }) => {
     return (
         <div className="board">
             {board.map((token, ind) => {
-                return <Box token={token} onClick={() => onClick(ind)} />
+                return <Box token={token} key={ind} onClick={() => onClick(ind)} />
             })}
         </div>
     )
