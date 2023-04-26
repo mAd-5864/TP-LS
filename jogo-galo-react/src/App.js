@@ -32,7 +32,7 @@ function App() {
 
   const resetBoard = () => {
     setGameOver(false);
-    setBoards(Array(9).fill(null));
+    setBoards(Array(9).fill(Array(9).fill(null)));
     setTurn(true);
   }
 
