@@ -1,16 +1,25 @@
 .box {
     background-color: #fff;
+    font-family: 'Sigmar', Verdana;
     border: none;
     box-shadow: 0 0 8px #777;
     border-radius: 15%;
     width: 4rem;
     height: 4rem;
     text-align: center;
+    line-height: 130%;
     font-size: 3em;
-    font-weight: 700;
+    font-weight: 500;
     margin: 5px;
 }
 
 .box:hover {
     box-shadow: 0 0 15px #ddd;
+}
+
+.x{
+    color: #3700ff;
+}
+.o{
+    color: #ff0000;
 }

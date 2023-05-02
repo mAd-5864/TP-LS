@@ -1,6 +1,6 @@
 import { React } from "react";
 
-import "./ResetBoard.css"
+import "./ResetBoard.css";
 
 export const ResetBoard = ({ resetBoard }) => {
     return (
