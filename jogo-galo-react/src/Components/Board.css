@@ -16,12 +16,14 @@
     background-color: #2f2f2f;
 }
 .win {
-    background-color: red ;
     border-radius: 15px;
-    
-
 }
 .win .box {
-    background-color: red;
     box-shadow: none;
+}
+.win.x, .x .box{
+    background-color: #3700ff;
+}
+.win.o, .o .box{
+    background-color: #ff0000;
 }
