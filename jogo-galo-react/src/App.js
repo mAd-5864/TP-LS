@@ -3,6 +3,7 @@ import './App.css';
 import { Board } from './Components/Board/Board';
 import { ResetBoard } from './Components/Board/ResetBoard';
 import { Header } from './Components/Header';
+import { GameOver } from './Components/Alertas/GameOver';
 
 function App() {
   const [board] = useState(Array(9).fill(null));
@@ -32,9 +33,9 @@ function App() {
   }
 
   const checkWin = (board, token, boardInd) => {
-    if (board[0] == token && board[1] == token && board[2] == token || board[3] == token && board[4] == token && board[5] == token || board[6] == token && board[7] == token && board[8] == token ||
-      board[0] == token && board[3] == token && board[6] == token || board[1] == token && board[4] == token && board[7] == token || board[2] == token && board[5] == token && board[8] == token ||
-      board[0] == token && board[4] == token && board[8] == token || board[6] == token && board[4] == token && board[2] == token) {
+    if (board[0] === token && board[1] === token && board[2] === token || board[3] === token && board[4] === token && board[5] === token || board[6] === token && board[7] === token && board[8] === token ||
+      board[0] === token && board[3] === token && board[6] === token || board[1] === token && board[4] === token && board[7] === token || board[2] === token && board[5] === token && board[8] === token ||
+      board[0] === token && board[4] === token && board[8] === token || board[6] === token && board[4] === token && board[2] === token) {
         if (board==boardWin) {
           console.log("GANHOU O JOGADOR "+ token);
           setGameOver(true);
@@ -62,6 +63,7 @@ function App() {
   return (
     <div className="App">
       <Header />;
+      <GameOver nome={'winner'} gameOver={gameOver}/>
       <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
         {boards.map((value, boardInd) => (
           <Board
