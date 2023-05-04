@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Board } from './Components/Board';
-import { ResetBoard } from './Components/ResetBoard';
+import { Board } from './Components/Board/Board';
+import { ResetBoard } from './Components/Board/ResetBoard';
 import { Header } from './Components/Header';
 
 function App() {
