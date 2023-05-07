@@ -31,9 +31,9 @@ function App() {
     setBoards(updatedBoards);
     checkWin(updatedBoards[boardInd], turn ? 'X' : 'O', boardInd);
 
-    boardWin[boxInd]==false ?
+    boardWin[boxInd]===false ?
       lastMove.forEach((element, ind) => {
-        lastMove[ind] = ind == boxInd ? true : false
+        lastMove[ind] = ind === boxInd ? true : false
       }) : setLastMove(Array(9).fill(true));
 
     console.log(lastMove);
@@ -43,7 +43,7 @@ function App() {
     if ((board[0] === token && board[1] === token && board[2] === token) || (board[3] === token && board[4] === token && board[5] === token) || (board[6] === token && board[7] === token && board[8] === token) ||
       (board[0] === token && board[3] === token && board[6] === token) || (board[1] === token && board[4] === token && board[7] === token) || (board[2] === token && board[5] === token && board[8] === token) ||
       (board[0] === token && board[4] === token && board[8] === token) || (board[6] === token && board[4] === token && board[2] === token)) {
-      if (board == boardWin) {
+      if (board === boardWin) {
         console.log("GANHOU O JOGADOR " + token);
         setLastMove(Array(9).fill(true))
         setGameOver(true);
