@@ -40,9 +40,9 @@ function App() {
   }
 
   const checkWin = (board, token, boardInd) => {
-    if (board[0] === token && board[1] === token && board[2] === token || board[3] === token && board[4] === token && board[5] === token || board[6] === token && board[7] === token && board[8] === token ||
-      board[0] === token && board[3] === token && board[6] === token || board[1] === token && board[4] === token && board[7] === token || board[2] === token && board[5] === token && board[8] === token ||
-      board[0] === token && board[4] === token && board[8] === token || board[6] === token && board[4] === token && board[2] === token) {
+    if ((board[0] === token && board[1] === token && board[2] === token) || (board[3] === token && board[4] === token && board[5] === token) || (board[6] === token && board[7] === token && board[8] === token) ||
+      (board[0] === token && board[3] === token && board[6] === token) || (board[1] === token && board[4] === token && board[7] === token) || (board[2] === token && board[5] === token && board[8] === token) ||
+      (board[0] === token && board[4] === token && board[8] === token) || (board[6] === token && board[4] === token && board[2] === token)) {
       if (board == boardWin) {
         console.log("GANHOU O JOGADOR " + token);
         setLastMove(Array(9).fill(true))
