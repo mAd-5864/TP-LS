@@ -31,7 +31,7 @@ function App() {
     setBoards(updatedBoards);
     checkWin(updatedBoards[boardInd], turn ? 'X' : 'O', boardInd);
 
-    boardWin[boxInd]===false ?
+    boardWin[boxInd] === false ?
       lastMove.forEach((element, ind) => {
         lastMove[ind] = ind === boxInd ? true : false
       }) : setLastMove(Array(9).fill(true));
@@ -71,8 +71,8 @@ function App() {
 
   return (
     <div className="App">
-      <Header />;
-      <GameOver nome={'winner'} gameOver={gameOver} />
+      <Header />
+      <GameOver nome={'Jogador ' + turn ? '1' : '2'} gameOver={gameOver} />
       <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
         {boards.map((value, boardInd) => (
           <Board

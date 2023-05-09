@@ -3,9 +3,12 @@ import './GameOver.css';
 
 export const GameOver = (props) => {
     return (
-        <div className={props.gameOver ? "popup" : "disabled"}>
+        <div className={props.gameOver ? "winnerModal" : "disabled"}>
+
+        <div className="modalContent">
             <h1 className="endgame"><span>Game</span> Over</h1>
             <h2 className="pwin">Ganhou o jogador { props.nome } </h2>        
+        </div>
         </div>
     )
 }
