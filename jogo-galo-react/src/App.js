@@ -19,6 +19,10 @@ function App() {
         return board.map((token, i) => {
           if (i === boxInd && token == null) {
             setTurn(!turn);
+            boardWin[boxInd] === false ?
+              lastMove.forEach((element, index) => {
+                lastMove[index] = index === boxInd ? true : false
+              }) : setLastMove(Array(9).fill(true));
             return turn ? 'X' : 'O';
           } else {
             return token;
@@ -31,10 +35,6 @@ function App() {
     setBoards(updatedBoards);
     checkWin(updatedBoards[boardInd], turn ? 'X' : 'O', boardInd);
 
-    boardWin[boxInd] === false ?
-      lastMove.forEach((element, ind) => {
-        lastMove[ind] = ind === boxInd ? true : false
-      }) : setLastMove(Array(9).fill(true));
 
     console.log(lastMove);
   }
@@ -58,8 +58,6 @@ function App() {
     } else {
     }
   }
-
-
 
   const resetBoard = () => {
     setGameOver(false);
