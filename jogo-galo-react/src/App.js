@@ -30,17 +30,17 @@ function App() {
     });
     setBoards(updatedBoards);
     checkWin(updatedBoards[boardInd], turn ? 'X' : 'O', boardInd);
-    boardWin[boxInd] === null ?
+    /* boardWin[boxInd] === null ?
       lastMove.forEach((element, index) => {
         lastMove[index] = index === boxInd ? true : false
-      }) : setLastMove(Array(9).fill(true));
+      }) : setLastMove(Array(9).fill(true)); */
   }
 
   const checkWin = (board, token, boardInd) => {
     const winConditions = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-      [0, 4, 8], [6, 4, 2] // Diagonals
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Linhas
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colunas
+      [0, 4, 8], [6, 4, 2] // Diagonais
     ];
 
     for (const condition of winConditions) {
@@ -79,17 +79,21 @@ function App() {
     setTurn(true);
   };
 
+  const autoWin = () =>{
+    setGameOver(true);
+    console.log(`Ganhou o jogador ${turn?"X":"O"}`);
+    console.log("GameOver - "+gameOver);
+}
+
   return (
     <div className="App">
       <Header />
-      <GameOver nome={`Jogador ${turn ? '1' : '2'}`} gameOver={gameOver} />
+      <GameOver nome={turn ? '2' : '1'} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard}/>
       <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
         {boards.map((value, boardInd) => (
           <Board
             key={boardInd}
             board={boards[boardInd]}
-
-
             win={boardWin[boardInd]}
             lastMove={lastMove[boardInd]}
             onClick={gameOver ? resetBoard : (boxInd) => boxClick(boardInd, boxInd)}
@@ -97,6 +101,7 @@ function App() {
         ))}
       </div>
       <ResetBoard resetBoard={resetBoard} />
+      <button className="reset-btn" onClick={autoWin}>AUTO WIN</button>
     </div>
   );
 }
