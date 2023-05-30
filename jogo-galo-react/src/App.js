@@ -30,10 +30,10 @@ function App() {
     });
     setBoards(updatedBoards);
     checkWin(updatedBoards[boardInd], turn ? 'X' : 'O', boardInd);
-    /* boardWin[boxInd] === null ?
+    boardWin[boxInd] === null ?
       lastMove.forEach((element, index) => {
         lastMove[index] = index === boxInd ? true : false
-      }) : setLastMove(Array(9).fill(true)); */
+      }) : setLastMove(Array(9).fill(true));
   }
 
   const checkWin = (board, token, boardInd) => {
