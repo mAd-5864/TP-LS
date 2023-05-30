@@ -30,3 +30,7 @@
     background-color: #ff0000;
     transition: background-color 500ms ease-out;
 }
+.empate, .empate .box{
+    background-color: #00cc0a;
+    transition: background-color 500ms ease-out;
+}
