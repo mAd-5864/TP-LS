@@ -1,0 +1,57 @@
+.tudo{
+    border: solid 4px;
+    border-color: black;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 250px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #666;
+    width: 450px;
+    margin: 14% 33%;
+}
+.hidden{
+    display: none;
+}
+.names{
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    color: #eec66f;
+}
+
+.startgame{
+    border: none;
+    border-radius: 15%;
+    background-color: #eec66f;
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    margin: 20px auto;
+}
+
+.players{
+    margin-bottom: 10px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: space-between;}
+
+.player{
+    text-align: center;
+    font-size: 25px;
+}
+
+.label{
+    border: solid 1px;
+    margin-top: 7px;
+    width: 175px;
+    height: 30px;
+}
+
+.label:focus-visible{
+    outline: none;
+}

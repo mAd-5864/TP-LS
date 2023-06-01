@@ -4,6 +4,11 @@ import { Board } from './Components/Board/Board';
 import { ResetBoard } from './Components/Board/ResetBoard';
 import { Header } from './Components/Header';
 import { GameOver } from './Components/Alertas/GameOver';
+import { GameForm } from './Components/Alertas/Players';
+
+
+
+
 
 function App() {
   const [board] = useState(Array(9).fill(null));
@@ -12,6 +17,7 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [boardWin, setBoardWin] = useState(Array(9).fill(null));
   const [lastMove, setLastMove] = useState(Array(9).fill(true));
+  const [startGame, setStartGame] = useState(false);
 
   const boxClick = (boardInd, boxInd) => {
     const updatedBoards = boards.map((board, ind) => {
@@ -73,6 +79,7 @@ function App() {
 
   const resetBoard = () => {
     setGameOver(false);
+    setStartGame(false);
     setBoardWin(Array(9).fill(null));
     setBoards(Array(9).fill(Array(9).fill(null)));
     setLastMove(Array(9).fill(true));
@@ -87,6 +94,7 @@ function App() {
 
   return (
     <div className="App">
+      <GameForm startGame={startGame}/>
       <Header />
       <GameOver nome={turn ? '2' : '1'} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard}/>
       <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
