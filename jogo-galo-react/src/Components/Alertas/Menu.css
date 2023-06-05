@@ -1,0 +1,132 @@
+.mainMenu {
+    position: relative;
+    display: flex;
+    margin: 1rem auto;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    border-radius: 10px;
+    background-color: #fff;
+    color: #666;
+    width: 500px;
+    margin-top: 10%;
+}
+.mainMenu button {
+    border: none;
+    border-radius: 15px;
+    background-color: #eec66f;
+    font-size: 1.5rem;
+}
+
+.gameMode {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    justify-content: space-around;
+}
+.gameMode button {
+    height: 45px;
+    width: 200px;
+}
+.playersMenu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 60px;
+}
+.hidden {
+    display: none;
+}
+.names {
+    text-align: center;
+    letter-spacing: 2px;
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    color: #eec66f;
+}
+
+.startgame {
+    padding: 5px 15px;
+    margin: 30px auto 0 auto;
+}
+
+.players {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    margin-top: 12px;
+    text-align: center;
+    font-size: 22px;
+}
+.players ::-webkit-input-placeholder {
+    text-align: center;
+}
+
+.label {
+    border: solid 2px #a3a3a3;
+    border-radius: 20px;
+    margin-top: 7px;
+    width: 150px;
+    height: 30px;
+    text-align: center;
+}
+.back {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.label:focus-visible {
+    outline: none;
+}
+.invalidNames {
+    position: absolute;
+    bottom: 15px;
+    left: 120px;
+    background-color: #ffdada;
+    color: #852425;
+    padding: 5px 10px;
+    margin: 0 auto;
+}
+.player {
+    text-align: center;
+    background-color: #fff;
+    width: 200px;
+    height: auto;
+    border: solid 10px #2f2f2f;
+    border-radius: 20px;
+    position: absolute;
+    top: 30px;
+    font-size: 20px;
+    line-height: auto;
+    font-weight: 700;
+    padding: 0;
+}
+.player.X {
+    left: 60px;
+    color: #3700ff;
+}
+.player.O {
+    right: 60px;
+    color: #ff0000;
+}
+.player p {
+    font-size: 2.5rem;
+    line-height: 0px;
+    font-family: "Sigmar", Verdana;
+}
+.firstPlayer {
+    position: absolute;
+    text-align: center;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: 50px;
+    height: 100px;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 20px;
+    border: solid 10px #2f2f2f;
+    color: #eec66f;
+}

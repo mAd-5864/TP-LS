@@ -1,6 +1,6 @@
 .box {
     background-color: #fff;
-    font-family: 'Sigmar', Verdana;
+    font-family: "Sigmar", Verdana;
     border: none;
     box-shadow: 0 0 8px #777;
     border-radius: 15%;
@@ -16,10 +16,14 @@
 .box:hover {
     box-shadow: 0 0 15px #ddd;
 }
+.box:disabled {
+    box-shadow: none;
+    cursor: not-allowed;
+}
 
-.x{
+.x {
     color: #3700ff;
 }
-.o{
+.o {
     color: #ff0000;
 }

@@ -1,14 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Board } from './Components/Board/Board';
 import { ResetBoard } from './Components/Board/ResetBoard';
 import { Header } from './Components/Header';
 import { GameOver } from './Components/Alertas/GameOver';
-import { GameForm } from './Components/Alertas/Players';
-
-
-
-
+import { RandomizeFirstPlayer, DisplayName, Menu } from './Components/Alertas/Menu';
 
 function App() {
   const [board] = useState(Array(9).fill(null));
@@ -18,6 +14,17 @@ function App() {
   const [boardWin, setBoardWin] = useState(Array(9).fill(null));
   const [lastMove, setLastMove] = useState(Array(9).fill(true));
   const [startGame, setStartGame] = useState(false);
+  const handleStartGame = (value) => {
+    setStartGame(value);
+  };
+  const [playerOneName, setPlayerOneName] = useState("");
+  const [playerTwoName, setPlayerTwoName] = useState("");
+  const handlePlayerOne = (name) => {
+    setPlayerOneName(name.playerOneName);
+  };
+  const handlePlayerTwo = (name) => {
+    setPlayerTwoName(name.playerTwoName);
+  };
 
   const boxClick = (boardInd, boxInd) => {
     const updatedBoards = boards.map((board, ind) => {
@@ -40,13 +47,13 @@ function App() {
       lastMove.forEach((element, index) => {
         lastMove[index] = index === boxInd ? true : false
       }) : setLastMove(Array(9).fill(true));
-  }
+  };
 
   const checkWin = (board, token, boardInd) => {
     const winConditions = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Linhas
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colunas
-      [0, 4, 8], [6, 4, 2] // Diagonais
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+      [0, 4, 8], [6, 4, 2] // Diagonals
     ];
 
     for (const condition of winConditions) {
@@ -86,30 +93,40 @@ function App() {
     setTurn(true);
   };
 
-  const autoWin = () =>{
+  const autoWin = () => {
     setGameOver(true);
-    console.log(`Ganhou o jogador ${turn?"X":"O"}`);
-    console.log("GameOver - "+gameOver);
-}
+    console.log(`Ganhou o jogador ${turn ? "X" : "O"}`);
+    console.log("GameOver - " + gameOver);
+  }
 
   return (
     <div className="App">
-      <GameForm startGame={startGame}/>
       <Header />
-      <GameOver nome={turn ? '2' : '1'} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard}/>
-      <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
-        {boards.map((value, boardInd) => (
-          <Board
-            key={boardInd}
-            board={boards[boardInd]}
-            win={boardWin[boardInd]}
-            lastMove={lastMove[boardInd]}
-            onClick={gameOver ? resetBoard : (boxInd) => boxClick(boardInd, boxInd)}
-          />
-        ))}
-      </div>
-      <ResetBoard resetBoard={resetBoard} />
-      <button className="reset-btn" onClick={autoWin}>AUTO WIN</button>
+      <Menu startGame={startGame} setStartGame={handleStartGame}
+        playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
+        playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
+      {startGame && (
+        <>
+          <RandomizeFirstPlayer playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
+            playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
+          <DisplayName playerName={playerOneName} token={"X"} turn={turn} />
+          <DisplayName playerName={playerTwoName} token={"O"} turn={!turn} />
+          <GameOver nome={turn ? playerTwoName : playerOneName} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard} />
+          <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
+            {boards.map((value, boardInd) => (
+              <Board
+                key={boardInd}
+                board={boards[boardInd]}
+                win={boardWin[boardInd]}
+                lastMove={lastMove[boardInd]}
+                onClick={gameOver ? resetBoard : (boxInd) => boxClick(boardInd, boxInd)}
+              />
+            ))}
+          </div>
+          <ResetBoard resetBoard={resetBoard} />
+          <button className="reset-btn" onClick={autoWin}>AUTO WIN</button>
+        </>
+      )}
     </div>
   );
 }
