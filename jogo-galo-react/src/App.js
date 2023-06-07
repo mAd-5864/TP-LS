@@ -27,12 +27,16 @@ function App() {
   };
 
   const boxClick = (boardInd, boxInd) => {
+    let ocupied = true;
     const updatedBoards = boards.map((board, ind) => {
       if (ind === boardInd) {
         return board.map((token, i) => {
           if (i === boxInd && token == null) {
             setTurn(!turn);
             return turn ? 'X' : 'O';
+          } else if (i === boxInd) {
+            ocupied = false;
+            return token;
           } else {
             return token;
           }
@@ -43,10 +47,12 @@ function App() {
     });
     setBoards(updatedBoards);
     checkWin(updatedBoards[boardInd], turn ? 'X' : 'O', boardInd);
-    boardWin[boxInd] === null ?
-      lastMove.forEach((element, index) => {
-        lastMove[index] = index === boxInd ? true : false
-      }) : setLastMove(Array(9).fill(true));
+    if (ocupied) {
+      boardWin[boxInd] === null ?
+        lastMove.forEach((element, index) => {
+          lastMove[index] = index === boxInd ? true : false
+        }) : setLastMove(Array(9).fill(true));
+    }
   };
 
   const checkWin = (board, token, boardInd) => {
