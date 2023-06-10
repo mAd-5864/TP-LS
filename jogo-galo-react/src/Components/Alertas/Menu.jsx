@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Menu.css";
+import { Clock } from "./Clock";
 
 export const Menu = (props) => {
     const [gameMode, setGameMode] = useState(null);
@@ -123,7 +124,7 @@ export const DisplayName = (props) => {
     return (
         <div className={"player " + props.token} style={props.turn ? { opacity: 1 } : { opacity: 0.4 }}>
             <h2>{props.playerName}</h2>
-            <p>{props.token}</p>
+            <Clock turn={props.turn} gameOver={props.gameOver} handleGameOver={props.handleGameOver} />
         </div>
     );
 };

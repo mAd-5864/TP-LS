@@ -10,13 +10,18 @@ function App() {
   const [board] = useState(Array(9).fill(null));
   const [boards, setBoards] = useState(Array(9).fill(board));
   const [turn, setTurn] = useState(true);
+  const [startGame, setStartGame] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [boardWin, setBoardWin] = useState(Array(9).fill(null));
   const [lastMove, setLastMove] = useState(Array(9).fill(true));
-  const [startGame, setStartGame] = useState(false);
+
   const handleStartGame = (value) => {
     setStartGame(value);
   };
+  const handleGameOver = (value) => {
+    setGameOver(value);
+  };
+
   const [playerOneName, setPlayerOneName] = useState("");
   const [playerTwoName, setPlayerTwoName] = useState("");
   const handlePlayerOne = (name) => {
@@ -115,8 +120,8 @@ function App() {
         <>
           <RandomizeFirstPlayer playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
             playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
-          <DisplayName playerName={playerOneName} token={"X"} turn={turn} />
-          <DisplayName playerName={playerTwoName} token={"O"} turn={!turn} />
+          <DisplayName playerName={playerOneName} token={"X"} turn={turn} gameOver={gameOver} handleGameOver={handleGameOver} />
+          <DisplayName playerName={playerTwoName} token={"O"} turn={!turn} gameOver={gameOver} handleGameOver={handleGameOver} />
           <GameOver nome={turn ? playerTwoName : playerOneName} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard} />
           <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
             {boards.map((value, boardInd) => (
