@@ -12,6 +12,7 @@ function App() {
   const [turn, setTurn] = useState(true);
   const [startGame, setStartGame] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [empate, setEmpate] = useState(false);
   const [boardWin, setBoardWin] = useState(Array(9).fill(null));
   const [lastMove, setLastMove] = useState(Array(9).fill(true));
 
@@ -86,6 +87,16 @@ function App() {
 
     if (!board.includes(null)) {
       if (board === boardWin) {
+        let currentPlayerWins = 0, otherPlayerwins = 0, empates = 0;
+        for (let i = 0; i < boardWin.length; i++) {
+          const element = boardWin[i];
+          if (element === "win" + token) currentPlayerWins++;
+          else if (element === "empate") empates++;
+          else otherPlayerwins++
+        }
+        if (currentPlayerWins < otherPlayerwins) {
+          setTurn(!turn);
+        } else if (currentPlayerWins === otherPlayerwins) setEmpate(true);
         setGameOver(true);
       } else {
         boardWin[boardInd] = "empate";
@@ -98,6 +109,7 @@ function App() {
   const resetBoard = () => {
     setGameOver(false);
     setStartGame(false);
+    setEmpate(false);
     setBoardWin(Array(9).fill(null));
     setBoards(Array(9).fill(Array(9).fill(null)));
     setLastMove(Array(9).fill(true));
@@ -122,7 +134,7 @@ function App() {
             playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
           <DisplayName playerName={playerOneName} token={"X"} turn={turn} gameOver={gameOver} handleGameOver={handleGameOver} />
           <DisplayName playerName={playerTwoName} token={"O"} turn={!turn} gameOver={gameOver} handleGameOver={handleGameOver} />
-          <GameOver nome={turn ? playerTwoName : playerOneName} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard} />
+          <GameOver nome={turn ? playerTwoName : playerOneName} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard} empate={empate} />
           <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
             {boards.map((value, boardInd) => (
               <Board
