@@ -36,6 +36,10 @@ export const Menu = (props) => {
             event.preventDefault();
             verify(playerOneName, playerTwoName);
         };
+        const handleSubmitSolo = (event) => {
+            event.preventDefault();
+            props.setStartGame(true);
+        };
 
         function verify(playerOneName, playerTwoName) {
             if (playerOneName === playerTwoName || playerOneName === "" || playerTwoName === "") {
@@ -52,7 +56,20 @@ export const Menu = (props) => {
 
         if (gameMode === 1) {
             return (
-                <form className={startGame ? "hidden" : "playersMenu"} onSubmit={handleSubmit}>
+                <form className={startGame ? "hidden" : "playersMenu"} onSubmit={handleSubmitSolo}>
+                    <h1 className="names">Escolha o seu Nome</h1>
+                    <div className="players">
+                    <label>
+                            Jogador
+                            <input
+                                className="label"
+                                placeholder="Digite o seu nome"
+                                type="text"
+                                value={playerOneName}
+                                onChange={handlePlayerOneChange}
+                            />
+                        </label>
+                    </div>
                     <button className="startgame" type="submit">
                         Start Game
                     </button>
