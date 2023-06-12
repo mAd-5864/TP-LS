@@ -5,6 +5,7 @@ import { ResetBoard } from './Components/Board/ResetBoard';
 import { Header } from './Components/Header';
 import { GameOver } from './Components/Alertas/GameOver';
 import { RandomizeFirstPlayer, DisplayName, Menu } from './Components/Alertas/Menu';
+import { Bot } from './Components/Bot/Bot';
 
 function App() {
   const [board] = useState(Array(9).fill(null));
@@ -15,12 +16,17 @@ function App() {
   const [empate, setEmpate] = useState(false);
   const [boardWin, setBoardWin] = useState(Array(9).fill(null));
   const [lastMove, setLastMove] = useState(Array(9).fill(true));
+  const [gameMode, setGameMode] = useState(null);
 
   const handleStartGame = (value) => {
     setStartGame(value);
   };
   const handleGameOver = (value) => {
     setGameOver(value);
+  };
+
+  const handleGameMode = (value) => {
+    setGameMode(value);
   };
 
   const [playerOneName, setPlayerOneName] = useState("");
@@ -127,9 +133,12 @@ function App() {
       <Header />
       <Menu startGame={startGame} setStartGame={handleStartGame}
         playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
-        playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
+        playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} 
+        gameMode={gameMode} setGameMode={handleGameMode}
+        />
       {startGame && (
         <>
+          <Bot turn={turn} lastMove={lastMove} boardWin={boardWin} boxClick={boxClick}/>
           <RandomizeFirstPlayer playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
             playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
           <DisplayName playerName={playerOneName} token={"X"} turn={turn} gameOver={gameOver} handleGameOver={handleGameOver} />

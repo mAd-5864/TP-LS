@@ -3,7 +3,7 @@ import "./Menu.css";
 import { Clock } from "./Clock";
 
 export const Menu = (props) => {
-    const [gameMode, setGameMode] = useState(null);
+    const [gameMode, setGameMode] = useState(props.GameMode);
     const [startGame, setStartGame] = useState(props.startGame);
     const [playerOne, setPlayerOneName] = useState(props.playerOneName);
     const [playerTwo, setPlayerTwoName] = useState(props.playerTwoName);
@@ -12,7 +12,8 @@ export const Menu = (props) => {
         setStartGame(props.startGame);
         setPlayerOneName(props.playerOneName);
         setPlayerTwoName(props.playerTwoName);
-    }, [props.startGame, props.playerOneName, props.playerTwoName]);
+        setGameMode(props.gameMode);
+    }, [props.startGame, props.playerOneName, props.playerTwoName, props.gameMode]);
 
     const InputNames = () => {
         const [playerOneName, setPlayerOneName] = useState(playerOne);
@@ -38,7 +39,7 @@ export const Menu = (props) => {
         };
         const handleSubmitSolo = (event) => {
             event.preventDefault();
-            props.setStartGame(true);
+            verify(playerOneName, "BOT");
         };
 
         function verify(playerOneName, playerTwoName) {
