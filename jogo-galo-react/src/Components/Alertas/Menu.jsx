@@ -128,22 +128,27 @@ export const DisplayName = (props) => {
         </div>
     );
 };
+
 export const RandomizeFirstPlayer = React.memo((names) => {
     const [players, setPlayers] = useState([names.playerOneName, names.playerTwoName]);
-    const randomIndex = Math.floor(Math.random() * 2);
-    names.setPlayerOneName(players[randomIndex]);
-    names.setPlayerTwoName(players[randomIndex === 0 ? 1 : 0]);
-
+    const [condition, setCondition] = useState(true);
     const [hidden, setHidden] = useState(false);
-    const handleClick = () => {
-        setHidden(true);
-    };
 
-    return (
-        <div className={hidden ? "hidden" : ""} onClick={handleClick}>
-            <div className={`firstPlayer`} onClick={handleClick}>
-                <h1>{players[randomIndex] + " Joga Primeiro!"}</h1>
+    if (condition) {
+        const randomIndex = Math.floor(Math.random() * 2);
+        names.setPlayerOneName(players[randomIndex]);
+        names.setPlayerTwoName(players[randomIndex === 0 ? 1 : 0]);
+        const handleClick = () => {
+            setHidden(true);
+            setCondition(false);
+        };
+
+        return (
+            <div className={hidden ? "hidden" : ""} onClick={handleClick}>
+                <div className={`firstPlayer`} onClick={handleClick}>
+                    <h1>{players[randomIndex] + " Joga Primeiro!"}</h1>
+                </div>
             </div>
-        </div>
-    );
+        );
+    }
 });
