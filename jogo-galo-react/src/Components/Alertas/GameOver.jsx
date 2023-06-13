@@ -14,7 +14,7 @@ export const GameOver = (props) => {
     };
     return (
         <div className={display ? `winnerModal` : "disabled"}>
-            <div className={`modalContent  ` + (!props.empate ? props.jogador : "empate")}>
+            <div className={`modalContent  ` + (!props.empate ? props.jogador : "empateModal")}>
                 <h1 className="endgame">Game Over</h1>
 
                 <h2 className="pwin">{props.empate ? "Empate" : props.nome + " Ganhou"}!</h2>

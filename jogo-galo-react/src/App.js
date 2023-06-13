@@ -18,6 +18,9 @@ function App() {
   const [lastMove, setLastMove] = useState(Array(9).fill(true));
   const [gameMode, setGameMode] = useState(null);
 
+  const handleGameMode = (value) => {
+    setGameMode(value);
+  };
   const handleStartGame = (value) => {
     setStartGame(value);
   };
@@ -25,9 +28,6 @@ function App() {
     setGameOver(value);
   };
 
-  const handleGameMode = (value) => {
-    setGameMode(value);
-  };
 
   const [playerOneName, setPlayerOneName] = useState("");
   const [playerTwoName, setPlayerTwoName] = useState("");
@@ -96,13 +96,14 @@ function App() {
         let currentPlayerWins = 0, otherPlayerwins = 0, empates = 0;
         for (let i = 0; i < boardWin.length; i++) {
           const element = boardWin[i];
-          if (element === "win" + token) currentPlayerWins++;
+          if (element === `win${token}`) currentPlayerWins++;
           else if (element === "empate") empates++;
           else otherPlayerwins++
         }
         if (currentPlayerWins < otherPlayerwins) {
           setTurn(!turn);
         } else if (currentPlayerWins === otherPlayerwins) setEmpate(true);
+        console.log("PlayerWins: " + currentPlayerWins + " otherWins: " +otherPlayerwins+ " Empates: "+empates);
         setGameOver(true);
       } else {
         boardWin[boardInd] = "empate";
@@ -133,16 +134,19 @@ function App() {
       <Header />
       <Menu startGame={startGame} setStartGame={handleStartGame}
         playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
-        playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} 
+        playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName}
         gameMode={gameMode} setGameMode={handleGameMode}
-        />
+      />
       {startGame && (
         <>
-          <Bot turn={turn} lastMove={lastMove} boardWin={boardWin} boxClick={boxClick}/>
-          <RandomizeFirstPlayer playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
-            playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
-          <DisplayName playerName={playerOneName} token={"X"} turn={turn} gameOver={gameOver} handleGameOver={handleGameOver} />
-          <DisplayName playerName={playerTwoName} token={"O"} turn={!turn} gameOver={gameOver} handleGameOver={handleGameOver} />
+          {gameMode === 2 ? (
+            <RandomizeFirstPlayer playerOneName={playerOneName} setPlayerOneName={setPlayerOneName}
+              playerTwoName={playerTwoName} setPlayerTwoName={setPlayerTwoName} />
+          ) : (
+            <Bot turn={turn} lastMove={lastMove} boardWin={boardWin} boxClick={boxClick} boards={boards} gameOver={gameOver} />
+          )}
+          <DisplayName playerName={playerOneName} token={"X"} turn={turn} gameOver={gameOver} handleGameOver={handleGameOver} gameMode={gameMode} />
+          <DisplayName playerName={playerTwoName} token={"O"} turn={!turn} gameOver={gameOver} handleGameOver={handleGameOver} gameMode={gameMode} />
           <GameOver nome={turn ? playerTwoName : playerOneName} jogador={turn ? 'O' : 'X'} display={gameOver} resetBoard={resetBoard} empate={empate} />
           <div className={gameOver ? 'mainBoard win' : 'mainBoard'}>
             {boards.map((value, boardInd) => (

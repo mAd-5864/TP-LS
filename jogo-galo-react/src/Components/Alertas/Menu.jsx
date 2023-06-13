@@ -9,10 +9,10 @@ export const Menu = (props) => {
     const [playerTwo, setPlayerTwoName] = useState(props.playerTwoName);
 
     useEffect(() => {
+        setGameMode(props.gameMode);
         setStartGame(props.startGame);
         setPlayerOneName(props.playerOneName);
         setPlayerTwoName(props.playerTwoName);
-        setGameMode(props.gameMode);
     }, [props.startGame, props.playerOneName, props.playerTwoName, props.gameMode]);
 
     const InputNames = () => {
@@ -60,7 +60,7 @@ export const Menu = (props) => {
                 <form className={startGame ? "hidden" : "playersMenu"} onSubmit={handleSubmitSolo}>
                     <h1 className="names">Escolha o seu Nome</h1>
                     <div className="players">
-                    <label>
+                        <label>
                             Jogador
                             <input
                                 className="label"
@@ -123,8 +123,8 @@ export const Menu = (props) => {
         if (!gameMode) {
             return (
                 <div className="gameMode">
-                    <button onClick={() => setGameMode(1)}>1 Jogador</button>
-                    <button onClick={() => setGameMode(2)}>2 Jogadores</button>
+                    <button onClick={() => props.setGameMode(1)}>1 Jogador</button>
+                    <button onClick={() => props.setGameMode(2)}>2 Jogadores</button>
                 </div>
             );
         }
@@ -142,7 +142,9 @@ export const DisplayName = (props) => {
     return (
         <div className={"player " + props.token} style={props.turn ? { opacity: 1 } : { opacity: 0.4 }}>
             <h2>{props.playerName}</h2>
-            <Clock turn={props.turn} gameOver={props.gameOver} handleGameOver={props.handleGameOver} />
+            {props.gameMode === 2 && (
+                <Clock turn={props.turn} gameOver={props.gameOver} handleGameOver={props.handleGameOver} />
+            )}
         </div>
     );
 };
