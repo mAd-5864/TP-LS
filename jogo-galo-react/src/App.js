@@ -94,16 +94,17 @@ function App() {
     if (!board.includes(null)) {
       if (board === boardWin) {
         let currentPlayerWins = 0, otherPlayerwins = 0, empates = 0;
+        console.log(board);
         for (let i = 0; i < boardWin.length; i++) {
           const element = boardWin[i];
-          if (element === `win${token}`) currentPlayerWins++;
+          if (element === "winX" && turn) currentPlayerWins++;
           else if (element === "empate") empates++;
           else otherPlayerwins++
         }
         if (currentPlayerWins < otherPlayerwins) {
           setTurn(!turn);
         } else if (currentPlayerWins === otherPlayerwins) setEmpate(true);
-        console.log("PlayerWins: " + currentPlayerWins + " otherWins: " +otherPlayerwins+ " Empates: "+empates);
+        console.log("PlayerWins: " + currentPlayerWins + " otherWins: " + otherPlayerwins + " Empates: " + empates);
         setGameOver(true);
       } else {
         boardWin[boardInd] = "empate";
