@@ -10,7 +10,9 @@ body {
     width: 100%;
     margin: 0;
     background-color: #2f2f2f;
+    background: linear-gradient(90deg, #2f2f2f 0%, #555555 30%, #555555 70%, #2f2f2f 100%);
     color: #fff;
+    overflow: auto;
     user-select: none;
 }
 body:hover {
