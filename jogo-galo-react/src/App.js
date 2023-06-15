@@ -124,12 +124,6 @@ function App() {
     setTurn(true);
   };
 
-  const autoWin = () => {
-    setGameOver(true);
-    console.log(`Ganhou o jogador ${turn ? "X" : "O"}`);
-    console.log("GameOver - " + gameOver);
-  }
-
   return (
     <div className="App">
       <Header />
@@ -161,7 +155,6 @@ function App() {
             ))}
           </div>
           <ResetBoard resetBoard={resetBoard} />
-          <button className="reset-btn" onClick={autoWin}>AUTO WIN</button>
         </>
       )}
     </div>

@@ -7,15 +7,11 @@ export const Bot = (props) => {
       [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
       [0, 4, 8], [6, 4, 2] // Diagonals
     ];
-    console.log(board);
     let token
     for (let i = 0; i < 2; i++) {
       i ? token = 'X' : token = 'O'
       for (const condition of winConditions) {
         const [a, b, c] = condition;
-        console.log("A" + a);
-        console.log("B" + b);
-        console.log("C" + c);
         if (board[a] === token && board[b] === token && board[c] === null) {
           return c
         } else
@@ -47,9 +43,7 @@ export const Bot = (props) => {
             }
             boardindex = availableBoards[Math.floor(Math.random() * availableBoards.length)];
           }
-          console.log(props.boards[boardindex]);
           boxindex = BotBlock(props.boards[boardindex])
-          console.log("Tentou: " + boxindex);
           if (boxindex === null) {
             boxindex = Math.floor(Math.random() * 9);
           }

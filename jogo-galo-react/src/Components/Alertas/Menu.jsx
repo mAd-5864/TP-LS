@@ -61,7 +61,6 @@ export const Menu = (props) => {
                     <h1 className="names">Escolha o seu Nome</h1>
                     <div className="players">
                         <label>
-                            Jogador
                             <input
                                 className="label"
                                 placeholder="Digite o seu nome"

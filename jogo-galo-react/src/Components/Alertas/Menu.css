@@ -11,6 +11,7 @@
     width: 500px;
     margin-top: 10%;
 }
+
 .mainMenu button {
     border: none;
     border-radius: 15px;
@@ -24,19 +25,23 @@
     height: 60%;
     justify-content: space-around;
 }
+
 .gameMode button {
     height: 45px;
     width: 200px;
 }
+
 .playersMenu {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     margin-bottom: 60px;
 }
+
 .hidden {
     display: none;
 }
+
 .names {
     text-align: center;
     letter-spacing: 2px;
@@ -54,7 +59,7 @@
 
 .players {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 10px;
     margin-top: 12px;
     text-align: center;
@@ -72,6 +77,7 @@
     height: 30px;
     text-align: center;
 }
+
 .back {
     position: absolute;
     bottom: 20px;
@@ -81,6 +87,7 @@
 .label:focus-visible {
     outline: none;
 }
+
 .invalidNames {
     position: absolute;
     bottom: 15px;
@@ -90,6 +97,7 @@
     padding: 5px 10px;
     margin: 0 auto;
 }
+
 .player {
     text-align: center;
     background-color: #fff;
@@ -103,19 +111,23 @@
     font-weight: 700;
     padding: 0;
 }
+
 .player.X {
     left: 60px;
     color: #3700ff;
 }
+
 .player.O {
     right: 60px;
     color: #ff0000;
 }
+
 .player p {
     font-size: 2.5rem;
     line-height: 0px;
     font-family: "Sigmar", Verdana;
 }
+
 .firstPlayer {
     position: absolute;
     text-align: center;
