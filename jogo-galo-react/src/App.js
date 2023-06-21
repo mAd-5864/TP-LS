@@ -95,11 +95,12 @@ function App() {
       if (board === boardWin) {
         let currentPlayerWins = 0, otherPlayerwins = 0, empates = 0;
         console.log(board);
+        setTurn(true)
         for (let i = 0; i < boardWin.length; i++) {
           const element = boardWin[i];
-          if (element === "winX" && turn) currentPlayerWins++;
+          if (element === "winX") currentPlayerWins++;
+          else if (element === "winO") otherPlayerwins++
           else if (element === "empate") empates++;
-          else otherPlayerwins++
         }
         if (currentPlayerWins < otherPlayerwins) {
           setTurn(!turn);
