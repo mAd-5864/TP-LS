@@ -1,7 +1,10 @@
 .board {
-    display: grid;
-    width: fit-content;
-    grid-template-columns: repeat(10, 4.5rem);
+    display: flex;
+    width: min-content;
     place-items: center;
     margin: 0.5rem auto;
+}
+
+.linha{
+    width: fit-content;
 }

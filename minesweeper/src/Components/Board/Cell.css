@@ -1,21 +1,19 @@
 .cell {
     background-color: #fff;
     font-family: Verdana;
-    border: none;
-    box-shadow: 0 0 8px #777;
-    border-radius: 5%;
+    border: #000 1px solid;
     width: 4rem;
     height: 4rem;
     text-align: center;
     line-height: 130%;
     font-size: 1.5em;
     font-weight: 500;
-    margin: 3px;
 }
 
 .cell:hover {
-    box-shadow: 0 0 15px #ddd;
+    box-shadow: 0 0 10px #777;
 }
+
 .cell:disabled {
     box-shadow: none;
     cursor: not-allowed;
