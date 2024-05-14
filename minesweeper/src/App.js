@@ -6,7 +6,7 @@ function App() {
   const [boardState, setBoardState] = useState({
     nLines: 9,
     nColumns: 9,
-    nMines: 30,
+    nMines: 10,
   });
 
   const [board, setBoard] = useState(() => {
@@ -15,7 +15,7 @@ function App() {
         bomb: false,
         flag: false,
         clicked: false,
-        proximityBombs: 0,
+        proximityBombs: 0
       }))
     );
     return initialBoard;
@@ -51,7 +51,7 @@ function App() {
         minesPlaced++;
       }
     }
-
+    console.log("bombas geradas\n");
     setBoard(newBoard);
   };
 
@@ -61,7 +61,7 @@ function App() {
 
   return (
     <div className="App">
-      <Board boardState={boardState} handleCellClick={handleCellClick} />
+      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} />
       {console.log("Board:", board)}
     </div>
   );

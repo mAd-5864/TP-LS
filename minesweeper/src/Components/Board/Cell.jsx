@@ -4,11 +4,11 @@ import './Cell.css';
 export const Cell = (cell) => {
     const handleClick = () => {
         cell.handleCellClick(cell.x, cell.y);
+        console.log(`Cell: ${cell.x},${cell.y}`+cell.cellState);
     };
-
     return (
 
-        <button className="cell" onClick={handleClick}> {cell.x},{cell.y} </button>
+        <button className="cell" onClick={handleClick}> {cell.cellState.bomb ? "*":" "} </button>
 
     )
 }
