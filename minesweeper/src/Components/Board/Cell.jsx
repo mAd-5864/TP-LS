@@ -15,6 +15,6 @@ export const Cell = (cell) => {
     return (
 
         //<button className={"cell nBombas" + cell.cellState.proximityBombs + clicked} onClick={handleClick}> {cell.cellState.bomb ? "*" : cell.cellState.proximityBombs && !cell.cellState.bomb ? cell.cellState.proximityBombs : " "} </button>
-        <button className={"cell nBombas"+cell.cellState.proximityBombs+clicked} onClick={handleClick}> {cell.cellState.clicked ? cell.cellState.bomb ? "*": cell.cellState.proximityBombs&&!cell.cellState.bomb ? cell.cellState.proximityBombs : " " : " "} </button>
+        <button className={"cell nBombas"+cell.cellState.proximityBombs+clicked} onClick={handleClick}> {cell.cellState.clicked ? cell.cellState.bomb ? "*": cell.cellState.proximityBombs ? cell.cellState.proximityBombs : " " : " "} </button>
     )
 }
