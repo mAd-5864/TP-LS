@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Board } from './Components/Board/Board';
 import { Reset } from './Components/Board/Reset';
@@ -10,7 +10,14 @@ function App() {
     nLines: 9,
     nColumns: 9,
     nMines: 10,
+    cellsOpen: 0
   });
+
+  const nearbyCells = [
+    [-1, -1], [-1, 0], [-1, 1],
+    [0, -1], [0, 1],
+    [1, -1], [1, 0], [1, 1]
+  ];
 
   const [board, setBoard] = useState(() => {
     const initialBoard = Array.from({ length: boardState.nLines }, () =>
@@ -34,15 +41,27 @@ function App() {
         const updatedBoard = [...prevBoard]; // Fazer um copia do board
         const clickedCell = updatedBoard[x][y];
 
+        if (!clickedCell.clicked) { boardState.cellsOpen++ }
+        clickedCell.clicked = true;
         if (clickedCell.bomb) { // quaisquer verificacoes necessarias
-          clickedCell.clicked = true;
+          console.log(boardState.cellsOpen);
           setGameOver(true)
         }
-
+        else if (!clickedCell.proximityBombs) {
+          nearbyCells.forEach(([dx, dy]) => {
+            const neighbourX = x + dx;
+            const neighbourY = y + dy;
+            if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
+              if (!clickedCell.clicked) { boardState.cellsOpen++ }
+              updatedBoard[neighbourX][neighbourY].clicked = true
+            }
+          });
+        }
         return updatedBoard;
       });
       if (!gameStarted) {
         generateMines(x, y);
+        calcularBombasProximas(x, y);
         setGameStarted(true);
       }
     }
@@ -67,6 +86,33 @@ function App() {
     }
     console.log(minesPlaced + " bombas geradas\n");
     setBoard(newBoard);
+  };
+
+  const calcularBombasProximas = () => {
+    const newBoard = board.map((row, x) =>
+      row.map((cell, y) => {
+        let bombCount = 0;
+        if (!board[x][y].bomb) {
+          nearbyCells.forEach(([dx, dy]) => {
+            const neighbourX = x + dx;
+            const neighbourY = y + dy;
+
+            if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
+              if (board[neighbourX][neighbourY].bomb) {
+                bombCount++;
+              }
+            }
+          });
+        }
+
+        return {
+          ...cell,
+          proximityBombs: bombCount
+        };
+      })
+    );
+
+    setBoard(newBoard)
   };
 
 
