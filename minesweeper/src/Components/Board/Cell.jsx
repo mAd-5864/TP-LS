@@ -4,7 +4,8 @@ import './Cell.css';
 export const Cell = (cell) => {
     const handleClick = () => {
         cell.handleCellClick(cell.x, cell.y);
-        console.log(`Cell: ${cell.x},${cell.y}`+cell.cellState);
+        console.log(`Cell: ${cell.x},${cell.y}`);
+        console.log(cell.cellState);
     };
     return (
 

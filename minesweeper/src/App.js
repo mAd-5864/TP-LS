@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Board } from './Components/Board/Board';
+import { Reset } from './Components/Board/Reset';
 
 function App() {
+  const [gameStarted, setGameStarted] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [boardState, setBoardState] = useState({
     nLines: 9,
     nColumns: 9,
@@ -26,43 +29,71 @@ function App() {
   };
 
   const handleCellClick = (x, y) => {
-    setBoard(prevBoard => {
-      const updatedBoard = [...prevBoard]; // Fazer um copia do board
-      const clickedCell = updatedBoard[x][y];
+    if (!gameOver) {
+      setBoard(prevBoard => {
+        const updatedBoard = [...prevBoard]; // Fazer um copia do board
+        const clickedCell = updatedBoard[x][y];
 
-      if (clickedCell) { // quaisquer verificacoes necessarias
-        clickedCell.clicked = true;
+        if (clickedCell.bomb) { // quaisquer verificacoes necessarias
+          clickedCell.clicked = true;
+          setGameOver(true)
+        }
+
+        return updatedBoard;
+      });
+      if (!gameStarted) {
+        generateMines(x, y);
+        setGameStarted(true);
       }
-
-      return updatedBoard;
-    });
+    }
   };
 
-  const generateMines = () => {
-    const newBoard = [...board]
+  const generateMines = (xClicked, yClicked) => {
+    const newBoard = [...board];
 
     let minesPlaced = 0;
     while (minesPlaced < boardState.nMines) {
+      let flag = false;
       const x = randInt(0, boardState.nLines);
       const y = randInt(0, boardState.nColumns);
+      if ((x >= xClicked - 1 && x <= xClicked + 1) && (y >= yClicked - 1 && y <= yClicked + 1)) {
+        flag = true;
+      }
 
-      if (!newBoard[x][y].bomb) {
+      if (!newBoard[x][y].bomb && !flag) {
         newBoard[x][y].bomb = true;
         minesPlaced++;
       }
     }
-    console.log("bombas geradas\n");
+    console.log(minesPlaced + " bombas geradas\n");
     setBoard(newBoard);
   };
 
-  useEffect(() => {
-    generateMines();
-  }, []);
+
+  const resetBoard = () => {
+    setGameStarted(false)
+    setGameOver(false)
+    setBoard(() => {
+      const initialBoard = Array.from({ length: boardState.nLines }, () =>
+        Array.from({ length: boardState.nColumns }, () => ({
+          bomb: false,
+          flag: false,
+          clicked: false,
+          proximityBombs: 0
+        }))
+      );
+      return initialBoard;
+    })
+  }
 
   return (
     <div className="App">
+      <div className='panel'>
+        <span>Tabuleiro {boardState.nLines}x{boardState.nColumns} </span>
+        <span> Bombas: {boardState.nMines}</span>
+      </div>
       <Board boardState={boardState} board={board} handleCellClick={handleCellClick} />
-      {console.log("Board:", board)}
+      <Reset resetBoard={resetBoard} />
     </div>
   );
 }
