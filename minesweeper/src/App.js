@@ -7,9 +7,9 @@ function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [boardState] = useState({
-    nLines: 9,
-    nColumns: 9,
-    nMines: 10
+    nLines: 16,
+    nColumns: 16,
+    nMines: 40
   });
 
   const nearbyCells = [
@@ -67,6 +67,7 @@ function App() {
         clickedCell.clicked = true;
         if (clickedCell.bomb) { // quaisquer verificacoes necessarias
           setGameOver(true)
+          console.log("You Lost!");
         }
         else if (!clickedCell.proximityBombs || clickedCell.proximityBombs === nFlags) {
           nearbyCells.forEach(([dx, dy]) => {
@@ -160,9 +161,6 @@ function App() {
     });
     return flagCount;
   }
-
-
-
 
   const resetBoard = () => {
     setGameStarted(false)

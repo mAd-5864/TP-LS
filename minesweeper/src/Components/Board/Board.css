@@ -1,5 +1,6 @@
 .board {
     display: flex;
+    flex-direction: column;
     width: min-content;
     place-items: center;
     margin: 0.5rem auto;
@@ -7,5 +8,4 @@
 
 .linha{
     display: flex;
-    flex-direction: column;
 }
