@@ -5,16 +5,41 @@ export const Cell = (cell) => {
     const handleClick = () => {
         cell.handleCellClick(cell.x, cell.y);
     };
-    useEffect(()=>{
+
+    const handleFlag = (event) => {
+        if (event.preventDefault !== undefined) event.preventDefault();
+        if (event.stopPropagation !== undefined) event.stopPropagation();
+        cell.placeFlag(cell.x, cell.y);
+    };
+
+    useEffect(() => {
         if (cell.cellState.clicked) {
-            handleClick()
+            handleClick();
         }
-    },[cell.cellState.clicked])
+    }, [cell.cellState.clicked]);
 
     const clicked = cell.cellState.clicked ? " clicked " : "";
-    return (
+    let displayValue;
 
-        //<button className={"cell nBombas" + cell.cellState.proximityBombs + clicked} onClick={handleClick}> {cell.cellState.bomb ? "*" : cell.cellState.proximityBombs && !cell.cellState.bomb ? cell.cellState.proximityBombs : " "} </button>
-        <button className={"cell nBombas"+cell.cellState.proximityBombs+clicked} onClick={handleClick}> {cell.cellState.clicked ? cell.cellState.bomb ? "*": cell.cellState.proximityBombs ? cell.cellState.proximityBombs : " " : " "} </button>
-    )
-}
+    if (cell.cellState.clicked) {
+        if (cell.cellState.bomb) {
+            displayValue = "💣"; //💥
+        } else if (cell.cellState.proximityBombs) {
+            displayValue = cell.cellState.proximityBombs;
+        } else {
+            displayValue = " ";
+        }
+    } else {
+        if (cell.cellState.flag === 1) {
+            displayValue = "🚩";
+        } else if (cell.cellState.flag === 2) {
+            displayValue = "?";
+        } else {
+            displayValue = " ";
+        }
+    }
+
+    return (
+        <button className={`cell nBombas${cell.cellState.proximityBombs}${clicked}`} onClick={handleClick} onContextMenu={handleFlag}>{displayValue}    </button>
+    );
+};

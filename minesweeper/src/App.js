@@ -23,7 +23,7 @@ function App() {
     const initialBoard = Array.from({ length: boardState.nLines }, () =>
       Array.from({ length: boardState.nColumns }, () => ({
         bomb: false,
-        flag: false,
+        flag: 0,
         clicked: false,
         proximityBombs: 0
       }))
@@ -36,24 +36,30 @@ function App() {
   };
 
   const handleCellClick = (x, y) => {
-    if (!gameOver) {
+    if (!gameOver && !board[x][y].flag) {
       setBoard(prevBoard => {
         const updatedBoard = [...prevBoard]; // Fazer um copia do board
         const clickedCell = updatedBoard[x][y];
+        let nFlags;
 
-        if (!clickedCell.clicked) { boardState.cellsOpen++ }
+        if (clickedCell.clicked) {
+          nFlags = calcularFlagsProximas(x, y)
+        }
+        else { boardState.cellsOpen++ }
         clickedCell.clicked = true;
         if (clickedCell.bomb) { // quaisquer verificacoes necessarias
           console.log(boardState.cellsOpen);
           setGameOver(true)
         }
-        else if (!clickedCell.proximityBombs) {
+        else if (!clickedCell.proximityBombs || clickedCell.proximityBombs === nFlags) {
           nearbyCells.forEach(([dx, dy]) => {
             const neighbourX = x + dx;
             const neighbourY = y + dy;
             if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
               if (!clickedCell.clicked) { boardState.cellsOpen++ }
-              updatedBoard[neighbourX][neighbourY].clicked = true
+              if (!updatedBoard[neighbourX][neighbourY].flag) {
+                updatedBoard[neighbourX][neighbourY].clicked = true
+              }
             }
           });
         }
@@ -64,6 +70,19 @@ function App() {
         calcularBombasProximas(x, y);
         setGameStarted(true);
       }
+    }
+  };
+  const placeFlag = (x, y) => {
+    if (!gameOver && !board[x][y].clicked) {
+      setBoard(prevBoard => {
+        const updatedBoard = prevBoard.map(row => row.map(cell => ({ ...cell })));
+        const clickedCell = updatedBoard[x][y];
+
+        clickedCell.flag++;
+        if (clickedCell.flag === 3) clickedCell.flag = 0;
+
+        return updatedBoard;
+      });
     }
   };
 
@@ -115,6 +134,23 @@ function App() {
     setBoard(newBoard)
   };
 
+  const calcularFlagsProximas = (x, y) => {
+    let flagCount = 0;
+    nearbyCells.forEach(([dx, dy]) => {
+      const neighbourX = x + dx;
+      const neighbourY = y + dy;
+
+      if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
+        if (board[neighbourX][neighbourY].flag === 1) {
+          flagCount++;
+        }
+      }
+    });
+    return flagCount;
+  }
+
+
+
 
   const resetBoard = () => {
     setGameStarted(false)
@@ -123,7 +159,7 @@ function App() {
       const initialBoard = Array.from({ length: boardState.nLines }, () =>
         Array.from({ length: boardState.nColumns }, () => ({
           bomb: false,
-          flag: false,
+          flag: 0,
           clicked: false,
           proximityBombs: 0
         }))
@@ -138,7 +174,7 @@ function App() {
         <span>Tabuleiro {boardState.nLines}x{boardState.nColumns} </span>
         <span> Bombas: {boardState.nMines}</span>
       </div>
-      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} />
+      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} />
       <Reset resetBoard={resetBoard} />
     </div>
   );
