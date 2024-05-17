@@ -20,12 +20,14 @@ export const Cell = (cell) => {
 
     const clicked = cell.cellState.clicked ? " clicked " : "";
     let displayValue;
+    let cellStyle;
 
     if (cell.cellState.clicked) {
         if (cell.cellState.bomb) {
             displayValue = "💣"; //💥
         } else if (cell.cellState.proximityBombs) {
             displayValue = cell.cellState.proximityBombs;
+            cellStyle = `nBombas${cell.cellState.proximityBombs}`
         } else {
             displayValue = " ";
         }
@@ -34,12 +36,13 @@ export const Cell = (cell) => {
             displayValue = "🚩";
         } else if (cell.cellState.flag === 2) {
             displayValue = "?";
+            cellStyle = "possibleBomb"
         } else {
             displayValue = " ";
         }
     }
 
     return (
-        <button className={`cell nBombas${cell.cellState.proximityBombs}${clicked}`} onClick={handleClick} onContextMenu={handleFlag}>{displayValue}    </button>
+        <button className={`cell ${cellStyle}${clicked}`} onClick={handleClick} onContextMenu={handleFlag}>{displayValue}</button>
     );
 };

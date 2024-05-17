@@ -8,8 +8,8 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [boardState] = useState({
     nLines: 16,
-    nColumns: 16,
-    nMines: 40
+    nColumns: 30,
+    nMines: 80
   });
 
   const nearbyCells = [
@@ -73,7 +73,7 @@ function App() {
           nearbyCells.forEach(([dx, dy]) => {
             const neighbourX = x + dx;
             const neighbourY = y + dy;
-            if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
+            if (neighbourX >= 0 && neighbourX < boardState.nLines && neighbourY >= 0 && neighbourY < boardState.nColumns) {
               if (!updatedBoard[neighbourX][neighbourY].flag) {
                 updatedBoard[neighbourX][neighbourY].clicked = true
               }
@@ -129,7 +129,7 @@ function App() {
             const neighbourX = x + dx;
             const neighbourY = y + dy;
 
-            if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
+            if (neighbourX >= 0 && neighbourX < boardState.nLines && neighbourY >= 0 && neighbourY < boardState.nColumns) {
               if (board[neighbourX][neighbourY].bomb) {
                 bombCount++;
               }
@@ -152,8 +152,7 @@ function App() {
     nearbyCells.forEach(([dx, dy]) => {
       const neighbourX = x + dx;
       const neighbourY = y + dy;
-
-      if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
+      if (neighbourX >= 0 && neighbourX < boardState.nLines && neighbourY >= 0 && neighbourY < boardState.nColumns) {
         if (board[neighbourX][neighbourY].flag === 1) {
           flagCount++;
         }
