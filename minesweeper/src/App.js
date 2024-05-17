@@ -6,11 +6,10 @@ import { Reset } from './Components/Board/Reset';
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
-  const [boardState, setBoardState] = useState({
+  const [boardState] = useState({
     nLines: 9,
     nColumns: 9,
-    nMines: 10,
-    cellsOpen: 0
+    nMines: 10
   });
 
   const nearbyCells = [
@@ -35,8 +34,28 @@ function App() {
     return Math.floor(Math.random() * (max - min) + min);
   };
 
+  const checkWin = () => {
+    let openCells = 0;
+    for (let x = 0; x < boardState.nLines; x++) {
+      for (let y = 0; y < boardState.nColumns; y++) {
+        if (board[x][y].clicked) {
+          openCells++;
+        }
+      }
+    }
+    if (openCells === (boardState.nLines * boardState.nColumns - boardState.nMines)) {
+      setGameOver(true);
+      console.log("You win!");
+    }
+  };
+
   const handleCellClick = (x, y) => {
     if (!gameOver && !board[x][y].flag) {
+      if (!gameStarted) {
+        generateMines(x, y);
+        calcularBombasProximas(x, y);
+        setGameStarted(true);
+      }
       setBoard(prevBoard => {
         const updatedBoard = [...prevBoard]; // Fazer um copia do board
         const clickedCell = updatedBoard[x][y];
@@ -45,10 +64,8 @@ function App() {
         if (clickedCell.clicked) {
           nFlags = calcularFlagsProximas(x, y)
         }
-        else { boardState.cellsOpen++ }
         clickedCell.clicked = true;
         if (clickedCell.bomb) { // quaisquer verificacoes necessarias
-          console.log(boardState.cellsOpen);
           setGameOver(true)
         }
         else if (!clickedCell.proximityBombs || clickedCell.proximityBombs === nFlags) {
@@ -56,7 +73,6 @@ function App() {
             const neighbourX = x + dx;
             const neighbourY = y + dy;
             if (neighbourX >= 0 && neighbourX < boardState.nColumns && neighbourY >= 0 && neighbourY < boardState.nLines) {
-              if (!clickedCell.clicked) { boardState.cellsOpen++ }
               if (!updatedBoard[neighbourX][neighbourY].flag) {
                 updatedBoard[neighbourX][neighbourY].clicked = true
               }
@@ -65,11 +81,7 @@ function App() {
         }
         return updatedBoard;
       });
-      if (!gameStarted) {
-        generateMines(x, y);
-        calcularBombasProximas(x, y);
-        setGameStarted(true);
-      }
+      checkWin();
     }
   };
   const placeFlag = (x, y) => {
