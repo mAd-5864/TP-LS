@@ -11,7 +11,11 @@ export const Clock = ({ gameOver, gameStarted }) => {
         }, 1000);
 
 
-        if (!gameStarted || gameOver) clearInterval(interval);
+        if (gameStarted && gameOver) {
+            clearInterval(interval);
+        } else if (!gameStarted && !gameOver) {
+            setTimer(0);
+        }
 
         return () => clearInterval(interval);
     }, [timer, gameOver, gameStarted]);
