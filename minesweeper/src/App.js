@@ -3,16 +3,19 @@ import './App.css';
 import { Board } from './Components/Board/Board';
 import { Reset } from './Components/UI/Reset';
 import { Header } from './Components/UI/Header';
+import GameOver from './Components/UI/GameOver';
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [totalFlags, setTotalFlags] = useState(0);
   const [level, setLevel] = useState(1);
   const [boardState, setBoardState] = useState({
-    nLines: 16,
-    nColumns: 30,
-    nMines: 71
+    nLines: 9,
+    nColumns: 9,
+    nMines: 10
   });
 
   const createInitialBoard = (state) => {
@@ -58,8 +61,7 @@ function App() {
       }
     }
     if (openCells === (boardState.nLines * boardState.nColumns - boardState.nMines)) {
-      setGameOver(true);
-      console.log("You win!");
+      handleGameEnd(true);
     }
     setTotalFlags(flagCount);
   };
@@ -85,8 +87,7 @@ function App() {
         }
         clickedCell.clicked = true;
         if (clickedCell.bomb) { // quaisquer verificacoes necessarias
-          setGameOver(true)
-          console.log("You Lost!");
+          handleGameEnd(false);
         }
         else if (!clickedCell.proximityBombs || clickedCell.proximityBombs === nFlags) {
           nearbyCells.forEach(([dx, dy]) => {
@@ -236,8 +237,15 @@ function App() {
     changeLevel(selectedLevel);
   };
 
+  const handleGameEnd = (won) => {
+    setGameOver(true);
+    setGameWon(won);
+    setModalOpen(true);
+  };
+
   return (
     <div className="App">
+      <GameOver isOpen={modalOpen} onClose={() => setModalOpen(false)} message={gameWon ? 'YOU WIN!' : 'YOU LOST!'} isWin={gameWon} />
       <Header boardState={boardState} totalFlags={totalFlags} gameStarted={gameStarted} gameOver={gameOver} changeLevel={handleLevelChange} />
       <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} />
       <Reset resetBoard={resetBoard} />

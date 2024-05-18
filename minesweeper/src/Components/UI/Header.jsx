@@ -14,17 +14,12 @@ export const Header = ({ boardState, totalFlags, gameOver, gameStarted, changeLe
             <header>
                 <h1 className="title">Minesweeper em React</h1>
                 <span>Tabuleiro {boardState.nLines}x{boardState.nColumns} </span>
-                <span> Bombas: {boardState.nMines}</span>
+                <span>| {boardState.nMines} Bombas</span>
             </header>
             <div className='boardSelect'>
-                <div>
                     <button value={1} onClick={changeLevel}>Fácil</button>
                     <button value={2} onClick={changeLevel}>Médio</button>
-                </div>
-                <div>
                     <button value={3} onClick={changeLevel}>Difícil</button>
-                    <button value={4} onClick={changeLevel}>Custom</button>
-                </div>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import './Board.css';
 import { Cell } from "./Cell";
 

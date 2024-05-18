@@ -24,7 +24,7 @@
 }
 
 .values, .boardSelect{
-    min-width: 200px;
+    min-width: 280px;
     text-align: start;
 }
 .values h3{
@@ -32,7 +32,6 @@
 }
 .boardSelect{
     display: flex;
-    flex-direction: column;
 }
 .boardSelect div{
     display: flex;

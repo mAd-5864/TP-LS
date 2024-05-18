@@ -1,0 +1,26 @@
+/* Modal.css */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 100%;
+    font-size: 8em;
+    -webkit-text-stroke: 3px #000;
+}
+
+.win {
+    color: #0f0;
+}
+
+.lose {
+    color: #f00;
+}
