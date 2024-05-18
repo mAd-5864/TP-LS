@@ -247,7 +247,7 @@ function App() {
     <div className="App">
       <GameOver isOpen={modalOpen} onClose={() => setModalOpen(false)} message={gameWon ? 'YOU WIN!' : 'YOU LOST!'} isWin={gameWon} />
       <Header boardState={boardState} totalFlags={totalFlags} gameStarted={gameStarted} gameOver={gameOver} changeLevel={handleLevelChange} />
-      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} />
+      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} gameOver={gameOver} gameWon={gameWon} />
       <Reset resetBoard={resetBoard} />
     </div>
   );

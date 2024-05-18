@@ -24,7 +24,7 @@ export const Cell = (cell) => {
 
     if (cell.cellState.clicked) {
         if (cell.cellState.bomb) {
-            displayValue = "💣"; //💥
+            displayValue = "💥"; //💣
         } else if (cell.cellState.proximityBombs) {
             displayValue = cell.cellState.proximityBombs;
             cellStyle = `nBombas${cell.cellState.proximityBombs}`
@@ -34,7 +34,9 @@ export const Cell = (cell) => {
     } else {
         if (cell.cellState.flag === 1) {
             displayValue = "🚩";
-        } else if (cell.cellState.flag === 2) {
+        } else if (cell.gameOver && cell.cellState.bomb && !cell.gameWon) {
+            displayValue = "💣";
+        } else if (!cell.gameOver && cell.cellState.flag === 2) {
             displayValue = "?";
             cellStyle = "possibleBomb"
         } else {
