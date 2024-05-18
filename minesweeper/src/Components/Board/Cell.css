@@ -14,11 +14,6 @@
     box-shadow: 0 0 30px #777;
 }
 
-.cell:disabled {
-    box-shadow: none;
-    cursor: not-allowed;
-}
-
 .nBombas1 {
     color: #00f;
 }

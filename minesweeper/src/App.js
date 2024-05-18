@@ -4,6 +4,8 @@ import { Board } from './Components/Board/Board';
 import { Reset } from './Components/UI/Reset';
 import { Header } from './Components/UI/Header';
 import GameOver from './Components/UI/GameOver';
+import explosao from "./Components/Audio/bomboclat.mp3"
+import cheer from "./Components/Audio/cheer.mp3"
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
@@ -53,14 +55,15 @@ function App() {
     let flagCount = 0;
     for (let x = 0; x < boardState.nLines; x++) {
       for (let y = 0; y < boardState.nColumns; y++) {
-        if (board[x][y].clicked) {
+        if (board[x][y].clicked || board[x][y].bomb) {
           openCells++;
-        } else if (board[x][y].flag === 1) {
+        }
+        if (board[x][y].flag === 1) {
           flagCount++;
         }
       }
     }
-    if (openCells === (boardState.nLines * boardState.nColumns - boardState.nMines)) {
+    if (openCells === (boardState.nLines * boardState.nColumns)) {
       handleGameEnd(true);
     }
     setTotalFlags(flagCount);
@@ -241,7 +244,13 @@ function App() {
     setGameOver(true);
     setGameWon(won);
     setModalOpen(true);
+    playGameOver(won)
   };
+
+  const playGameOver = (won) => {
+    const audioGameOver = new Audio(won ? cheer : explosao);
+    audioGameOver.play()
+  }
 
   return (
     <div className="App">
