@@ -1,9 +1,10 @@
 .reset-btn {
     border: 1px solid #aaa;
-    border-radius: 15%;
+    border-radius: 10%;
     background-color: #fff;
     font-size: 1.5rem;
     padding: 5px 10px;
-    margin: 20px auto;
+    margin: 10px auto;
     display: block;
+    align-self: flex-end;
 }

@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Board } from './Components/Board/Board';
-import { Reset } from './Components/Board/Reset';
+import { Reset } from './Components/UI/Reset';
+import { Header } from './Components/UI/Header';
 
 function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameOver, setGameOver] = useState(false);
-  const [boardState] = useState({
+  const [totalFlags, setTotalFlags] = useState(0);
+  const [level, setLevel] = useState(1);
+  const [boardState, setBoardState] = useState({
     nLines: 16,
     nColumns: 30,
-    nMines: 80
+    nMines: 71
   });
+
+  const createInitialBoard = (state) => {
+    return Array.from({ length: state.nLines }, () =>
+      Array.from({ length: state.nColumns }, () => ({
+        bomb: false,
+        flag: 0,
+        clicked: false,
+        proximityBombs: 0
+      }))
+    );
+  };
+  const [board, setBoard] = useState(() => createInitialBoard(boardState));
+
+  useEffect(() => {
+    setBoard(createInitialBoard(boardState));
+    setGameStarted(false);
+    setGameOver(false);
+    setTotalFlags(0);
+  }, [boardState]);
+
 
   const nearbyCells = [
     [-1, -1], [-1, 0], [-1, 1],
@@ -18,28 +41,19 @@ function App() {
     [1, -1], [1, 0], [1, 1]
   ];
 
-  const [board, setBoard] = useState(() => {
-    const initialBoard = Array.from({ length: boardState.nLines }, () =>
-      Array.from({ length: boardState.nColumns }, () => ({
-        bomb: false,
-        flag: 0,
-        clicked: false,
-        proximityBombs: 0
-      }))
-    );
-    return initialBoard;
-  });
-
   const randInt = (min, max) => {
     return Math.floor(Math.random() * (max - min) + min);
   };
 
   const checkWin = () => {
     let openCells = 0;
+    let flagCount = 0;
     for (let x = 0; x < boardState.nLines; x++) {
       for (let y = 0; y < boardState.nColumns; y++) {
         if (board[x][y].clicked) {
           openCells++;
+        } else if (board[x][y].flag === 1) {
+          flagCount++;
         }
       }
     }
@@ -47,7 +61,12 @@ function App() {
       setGameOver(true);
       console.log("You win!");
     }
+    setTotalFlags(flagCount);
   };
+
+  useEffect(() => {
+    checkWin();
+  }, [board]);
 
   const handleCellClick = (x, y) => {
     if (!gameOver && !board[x][y].flag) {
@@ -82,7 +101,6 @@ function App() {
         }
         return updatedBoard;
       });
-      checkWin();
     }
   };
   const placeFlag = (x, y) => {
@@ -101,8 +119,15 @@ function App() {
 
   const generateMines = (xClicked, yClicked) => {
     const newBoard = [...board];
+    const maxMines = boardState.nLines * boardState.nColumns - 9;
 
     let minesPlaced = 0;
+    if (boardState.nMines > maxMines) {
+      setBoardState({
+        ...boardState,
+        nMines: maxMines
+      })
+    }
     while (minesPlaced < boardState.nMines) {
       let flag = false;
       const x = randInt(0, boardState.nLines);
@@ -114,6 +139,9 @@ function App() {
       if (!newBoard[x][y].bomb && !flag) {
         newBoard[x][y].bomb = true;
         minesPlaced++;
+      }
+      if (minesPlaced >= maxMines) {
+        break
       }
     }
     console.log(minesPlaced + " bombas geradas\n");
@@ -164,25 +192,53 @@ function App() {
   const resetBoard = () => {
     setGameStarted(false)
     setGameOver(false)
-    setBoard(() => {
-      const initialBoard = Array.from({ length: boardState.nLines }, () =>
-        Array.from({ length: boardState.nColumns }, () => ({
-          bomb: false,
-          flag: 0,
-          clicked: false,
-          proximityBombs: 0
-        }))
-      );
-      return initialBoard;
-    })
+    setBoard(createInitialBoard(boardState))
   }
+
+  const changeLevel = (level) => {
+    let newBoardState = {};
+    switch (level) {
+      case 1:
+        newBoardState = {
+          nLines: 9,
+          nColumns: 9,
+          nMines: 10,
+        };
+        break;
+      case 2:
+        newBoardState = {
+          nLines: 16,
+          nColumns: 16,
+          nMines: 40,
+        };
+        break;
+      case 3:
+        newBoardState = {
+          nLines: 16,
+          nColumns: 30,
+          nMines: 99,
+        };
+        break;
+      default:
+        newBoardState = {
+          nLines: 10,
+          nColumns: 20,
+          nMines: 70,
+        };
+        break;
+    }
+    setBoardState(newBoardState);
+  };
+
+  const handleLevelChange = (event) => {
+    const selectedLevel = parseInt(event.target.value);
+    setLevel(selectedLevel);
+    changeLevel(selectedLevel);
+  };
 
   return (
     <div className="App">
-      <div className='panel'>
-        <span>Tabuleiro {boardState.nLines}x{boardState.nColumns} </span>
-        <span> Bombas: {boardState.nMines}</span>
-      </div>
+      <Header boardState={boardState} totalFlags={totalFlags} gameStarted={gameStarted} gameOver={gameOver} changeLevel={handleLevelChange} />
       <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} />
       <Reset resetBoard={resetBoard} />
     </div>
