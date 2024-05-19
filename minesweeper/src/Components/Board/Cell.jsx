@@ -6,10 +6,10 @@ export const Cell = (cell) => {
     const playBruh = () => {
         const audio = new Audio(bruh);
         audio.play()
-      }
-    
+    }
+
     const handleClick = () => {
-        if (!cell.cellState.clicked && !cell.cellState.bomb) {
+        if (!cell.cellState.clicked && !cell.cellState.bomb && !cell.gameOver) {
             playBruh()
         }
         cell.handleCellClick(cell.x, cell.y);
