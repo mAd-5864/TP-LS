@@ -24,11 +24,21 @@
 }
 
 .values, .boardSelect{
+    display: flex;
+    align-items: center;
     min-width: 280px;
     text-align: start;
 }
-.values h3{
+.values h3, .values h1{
     margin: 0;
+}
+.values h1{
+    font-size: 3em;
+    padding-bottom: 5px;
+    margin-right: 10%;
+}
+.fixShift{
+    padding-left: 7px;
 }
 .boardSelect{
     display: flex;

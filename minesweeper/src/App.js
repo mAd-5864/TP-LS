@@ -12,6 +12,7 @@ function App() {
   const [gameOver, setGameOver] = useState(false);
   const [gameWon, setGameWon] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [soundMuted, setSoundMuted] = useState(false);
   const [totalFlags, setTotalFlags] = useState(0);
   const [level, setLevel] = useState(1);
   const [boardState, setBoardState] = useState({
@@ -248,15 +249,21 @@ function App() {
   };
 
   const playGameOver = (won) => {
-    const audioGameOver = new Audio(won ? cheer : explosao);
-    audioGameOver.play()
+    if (!soundMuted) {
+      const audioGameOver = new Audio(won ? cheer : explosao);
+      audioGameOver.play()
+    }
+  }
+
+  const handleSoundMute = () => {
+    setSoundMuted(!soundMuted)
   }
 
   return (
     <div className="App">
       <GameOver isOpen={modalOpen} onClose={() => setModalOpen(false)} message={gameWon ? 'YOU WIN!' : 'YOU LOST!'} isWin={gameWon} />
-      <Header boardState={boardState} totalFlags={totalFlags} gameStarted={gameStarted} gameOver={gameOver} changeLevel={handleLevelChange} />
-      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} gameOver={gameOver} gameWon={gameWon} />
+      <Header boardState={boardState} totalFlags={totalFlags} gameStarted={gameStarted} gameOver={gameOver} changeLevel={handleLevelChange} soundMuted={soundMuted} handleSoundMute={handleSoundMute} />
+      <Board boardState={boardState} board={board} handleCellClick={handleCellClick} placeFlag={placeFlag} gameOver={gameOver} gameWon={gameWon} soundMuted={soundMuted}/>
       <Reset resetBoard={resetBoard} />
     </div>
   );

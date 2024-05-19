@@ -4,8 +4,10 @@ import './Cell.css';
 
 export const Cell = (cell) => {
     const playBruh = () => {
-        const audio = new Audio(bruh);
-        audio.play()
+        if (!cell.soundMuted) {
+            const audio = new Audio(bruh);
+            audio.play()
+        }
     }
 
     const handleClick = () => {
@@ -41,7 +43,9 @@ export const Cell = (cell) => {
             displayValue = " ";
         }
     } else {
-        if (cell.cellState.flag === 1) {
+        if (cell.cellState.flag === 1 && !cell.cellState.bomb && cell.gameOver) {
+            displayValue = "❌";
+        } else if (cell.cellState.flag === 1) {
             displayValue = "🚩";
         } else if (cell.gameOver && cell.cellState.bomb && !cell.gameWon) {
             displayValue = "💣";
