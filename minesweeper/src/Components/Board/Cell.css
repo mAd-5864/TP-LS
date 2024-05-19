@@ -12,6 +12,7 @@
 
 .cell:hover {
     box-shadow: 0 0 30px #777;
+    z-index: 2;
 }
 
 .nBombas1 {

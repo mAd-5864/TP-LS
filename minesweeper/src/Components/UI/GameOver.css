@@ -9,18 +9,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 3
 }
 
 .modal-content {
     width: 100%;
     font-size: 8em;
-    -webkit-text-stroke: 3px #000;
 }
 
 .win {
+    -webkit-text-stroke: 3px #090;
     color: #0f0;
 }
 
 .lose {
+    -webkit-text-stroke: 3px #900;
     color: #f00;
 }
