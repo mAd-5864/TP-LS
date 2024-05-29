@@ -116,6 +116,9 @@ function App() {
 
         clickedCell.flag++;
         if (clickedCell.flag === 3) clickedCell.flag = 0;
+        else if (clickedCell.flag===1 && totalFlags===boardState.nMines) {
+          clickedCell.flag--;
+        }
 
         return updatedBoard;
       });
