@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0f826d99.css",
+    "main.js": "/static/js/main.5b096aa1.js",
+    "static/media/bomboclat.mp3": "/static/media/bomboclat.7d76f793b9fc5dc6e38c.mp3",
+    "static/media/cheer.mp3": "/static/media/cheer.3e04e7ce8331216d0355.mp3",
+    "static/media/bruh.mp3": "/static/media/bruh.615503c132bbd7b355e1.mp3",
+    "index.html": "/index.html",
+    "main.0f826d99.css.map": "/static/css/main.0f826d99.css.map",
+    "main.5b096aa1.js.map": "/static/js/main.5b096aa1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0f826d99.css",
+    "static/js/main.5b096aa1.js"
+  ]
+}
